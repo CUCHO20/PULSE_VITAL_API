@@ -25,4 +25,4 @@ async def get_db():
     try:
         yield client
     finally:
-        pass
+        client.close()
