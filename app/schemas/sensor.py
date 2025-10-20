@@ -8,6 +8,7 @@ class LedChannel(str, Enum):
     RED = "red"
 
 class SensorReading(BaseModel):
+    device_id: str
     timestamp: datetime
     ir_value: int
     red_value: int
