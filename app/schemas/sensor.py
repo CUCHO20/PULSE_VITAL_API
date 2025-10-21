@@ -21,10 +21,16 @@ class SensorReadingCreate(BaseModel):
         if not 0 <= v <= 262143:
             raise ValueError('Value must be between 0 and 262143')
         return v
+    
+    class Config:
+        extra = 'ignore'
 
 class SensorReadingOut(SensorReadingCreate):
     device_id: str
     id: str
+
+    class Config:
+        from_attributes = True
 
 class SensorBatch(BaseModel):
     device_id: str
