@@ -1,10 +1,8 @@
 from datetime import datetime
 from typing import Optional
 from beanie import Document, Indexed
-from app.schemas.sensor import SensorReading as SensorSchema
 
-
-class SensorReading(Document, SensorSchema):
+class SensorReading(Document):
     device_id: str = Indexed()
     timestamp: datetime
     ir_value: int
