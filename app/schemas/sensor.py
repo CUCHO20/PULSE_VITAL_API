@@ -7,8 +7,7 @@ class LedChannel(str, Enum):
     IR = "ir"
     RED = "red"
 
-class SensorReading(BaseModel):
-    device_id: str
+class SensorReadingCreate(BaseModel):
     timestamp: datetime
     ir_value: int
     red_value: int
@@ -23,8 +22,12 @@ class SensorReading(BaseModel):
             raise ValueError('Value must be between 0 and 262143')
         return v
 
+class SensorReadingOut(SensorReadingCreate):
+    device_id: str
+    id: str
+
 class SensorBatch(BaseModel):
     device_id: str
     start_timestamp: datetime
     sample_rate: int
-    readings: List[SensorReading]
+    readings: List[SensorReadingCreate]

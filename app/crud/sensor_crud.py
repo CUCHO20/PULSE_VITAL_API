@@ -1,12 +1,17 @@
 from typing import List, Optional
 from app.models.sensor import SensorReading
-from app.schemas.sensor import SensorBatch
+from app.schemas.sensor import SensorBatch, SensorReadingCreate
 
 async def create_sensor_batch(batch: SensorBatch) -> List[SensorReading]:
     readings_instances = [
         SensorReading(
-            device_id=batch.device_id,
-            **reading.model_dump()
+            device_id=batch.device_id,  # Explícito: del batch
+            timestamp=reading.timestamp,
+            ir_value=reading.ir_value,
+            red_value=reading.red_value,
+            heart_rate=reading.heart_rate,
+            spo2=reading.spo2,
+            temperature=reading.temperature
         )
         for reading in batch.readings
     ]

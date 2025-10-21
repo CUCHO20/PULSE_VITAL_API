@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from app.schemas.sensor import SensorBatch
+from app.schemas.sensor import SensorBatch, SensorReadingOut
 from app.crud.sensor_crud import create_sensor_batch, get_readings_by_device
 from typing import List
 from app.models.sensor import SensorReading
@@ -15,8 +15,8 @@ async def process_sensor_batch(batch: SensorBatch) -> SensorBatch:
     
     return batch
 
-async def get_device_readings(device_id: str, limit: int = 10) -> List[SensorReading]:
+async def get_device_readings(device_id: str, limit: int = 10) -> List[SensorReadingOut]:
     readings = await get_readings_by_device(device_id, limit)
     if not readings:
         raise HTTPException(status_code=404, detail="Don't found any readings for the specified device")
-    return readings
+    return [SensorReadingOut.model_validate(r.model_dump()) for r in readings]
