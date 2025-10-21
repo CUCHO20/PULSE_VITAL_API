@@ -19,4 +19,4 @@ async def get_device_readings(device_id: str, limit: int = 10) -> List[SensorRea
     readings = await get_readings_by_device(device_id, limit)
     if not readings:
         raise HTTPException(status_code=404, detail="Don't found any readings for the specified device")
-    return [SensorReadingOut.model_validate(r.model_dump()) for r in readings]
+    return [SensorReadingOut.model_validate(r) for r in readings]

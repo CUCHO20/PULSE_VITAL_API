@@ -1,3 +1,4 @@
+from beanie import PydanticObjectId
 from pydantic import BaseModel, field_validator
 from datetime import datetime
 from typing import List, Optional
@@ -27,7 +28,7 @@ class SensorReadingCreate(BaseModel):
 
 class SensorReadingOut(SensorReadingCreate):
     device_id: str
-    id: str
+    id: PydanticObjectId
 
     class Config:
         from_attributes = True
