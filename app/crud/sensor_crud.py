@@ -19,7 +19,7 @@ async def create_sensor_batch(batch: SensorBatch) -> List[SensorReading]:
     return inserted
 
 async def get_readings_by_device(device_id: str, limit: int = 10) -> List[SensorReading]:
-    return await SensorReading.find({"device_id": device_id}).limit(limit).to_list()
+    return await SensorReading.find({"device_id": device_id}).sort({"timestamp": -1}).limit(limit).to_list()
 
 async def get_latest_reading(device_id: str) -> Optional[SensorReading]:
     return await SensorReading.find({"device_id": device_id}).sort({"timestamp": -1}).first_or_none()
