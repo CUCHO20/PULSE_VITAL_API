@@ -1,8 +1,18 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import lifespan
 from app.router import sensor
 
-app = FastAPI(title="PulseVitalAPI", lifespan=lifespan)
+app = FastAPI(title="PulseVital API", lifespan=lifespan)
+
+# CORS universal (cualquier origen)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(sensor.router)
 
