@@ -1,5 +1,5 @@
 from beanie import PydanticObjectId
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, Field, field_validator
 from datetime import datetime
 from typing import List, Optional
 from enum import Enum
@@ -9,7 +9,7 @@ class LedChannel(str, Enum):
     RED = "red"
 
 class SensorReadingCreate(BaseModel):
-    timestamp: datetime
+    timestamp: Optional[datetime] = Field(default_factory=datetime.utcnow)
     ir_value: int
     red_value: int
     heart_rate: Optional[float] = None  # bpm
@@ -35,6 +35,6 @@ class SensorReadingOut(SensorReadingCreate):
 
 class SensorBatch(BaseModel):
     device_id: str
-    start_timestamp: datetime
+    start_timestamp: Optional[datetime] = Field(default_factory=datetime.utcnow)
     sample_rate: int
     readings: List[SensorReadingCreate]
